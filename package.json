@@ -1,0 +1,28 @@
+{
+    "name": "grunt-apps-c",
+    "version": "0.1.0",
+    "description": "CoffeeScript, JavaScript, Eco in CommonJS/1.1 Modules",
+    "dependencies": {
+        "lodash": "~2.2.1",
+        "async": "~0.2.9",
+        "glob": "~3.2.6",
+        
+        "coffee-script": "1.6.3",
+        "eco": "~1.1.0-rc-3"
+    },
+    "devDependencies": {
+        "grunt": "~0.4.1"
+    },
+    "peerDependencies": {
+        "grunt": "~0.4.1"
+    },
+    "main": "Gruntfile.coffee",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:radekstepan/grunt-apps-c.git"
+    },
+    "keywords": [
+        "gruntplugin"
+    ],
+    "author": "Radek <rs676@cam.ac.uk>"
+}
