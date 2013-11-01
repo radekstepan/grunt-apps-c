@@ -64,7 +64,7 @@ tests =
             [
                 options:
                     name: 'TestApp'
-                , ([ a, b ], cb) ->
+            , ([ a, b ], cb) ->
                     _.each errors, assert.ifError
                     assert.equal a, b
                     do cb
@@ -74,7 +74,7 @@ tests =
             [
                 options:
                     name: 'TestApp'
-                , ([ a, b ], cb) ->
+            , ([ a, b ], cb) ->
                     assert errors.length
                     do cb
             ]

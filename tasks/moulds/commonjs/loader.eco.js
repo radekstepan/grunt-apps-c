@@ -213,12 +213,12 @@
 
   // AMD/RequireJS.
   if (typeof define !== 'undefined' && define.amd) {
-    define("<%- @package %>", [], function () {
+    define("<%- @package %>", [ /* load deps ahead of time */ ], function () {
       return main;
     });
   }
 
-  // Node.js/CommonJS.
+  // CommonJS.
   else if (typeof module !== 'undefined' && module.exports) {
     module.exports = main;
   }
