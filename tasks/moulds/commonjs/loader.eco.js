@@ -203,9 +203,34 @@
     <%- @modules.join('\n') %>
   })();
 
-  // Use our or outside require?
-  this.require = (this.require) ? this.require : require;
+  // Return the main app.
+  var main = function() {
+    return require("<%- @package %>/<%- @main %>.js");
+  };
 
-  // Expose the app.
+  // Global on server, window in browser.
+  var root = this;
+
+  // AMD/RequireJS.
+  if (typeof define !== 'undefined' && define.amd) {
+    define("<%- @package %>", [], function () {
+      return main;
+    });
+  }
+
+  // Node.js/CommonJS.
+  else if (typeof module !== 'undefined' && module.exports) {
+    module.exports = main;
+  }
+
+  // Globally exposed.
+  else {
+    root["<%- @package %>"] = main;
+  }
+
+  // Expose the app for our internal loader.
   require.alias("<%- @package %>/<%- @main %>.js", "<%- @package %>/index.js");
+
+  // Export internal loader?
+  root.require = (typeof root.require !== 'undefined') ? root.require : require;
 })();

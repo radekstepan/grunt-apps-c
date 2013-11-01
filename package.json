@@ -1,6 +1,6 @@
 {
     "name": "grunt-apps-c",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "CoffeeScript, JavaScript, Eco in CommonJS/1.1 Modules",
     "dependencies": {
         "lodash": "~2.2.1",
@@ -11,7 +11,10 @@
         "eco": "~1.1.0-rc-3"
     },
     "devDependencies": {
-        "grunt": "~0.4.1"
+        "grunt": "~0.4.1",
+        "mocha": "~1.12.0",
+        "proxyquire": "~0.5.1",
+        "grunt-verbosity": "~0.2.2"
     },
     "peerDependencies": {
         "grunt": "~0.4.1"
@@ -24,5 +27,8 @@
     "keywords": [
         "gruntplugin"
     ],
-    "author": "Radek <rs676@cam.ac.uk>"
+    "author": "Radek <rs676@cam.ac.uk>",
+    "scripts": {
+        "test": "./node_modules/.bin/mocha --compilers coffee:coffee-script --reporter spec --ui exports --bail --slow 500"
+    }
 }

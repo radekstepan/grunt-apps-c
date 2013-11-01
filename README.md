@@ -1,6 +1,8 @@
 #grunt-apps-c
 
-CoffeeScript, JavaScript, Eco in CommonJS/1.1 Modules
+CoffeeScript, JavaScript, Eco in CommonJS/1.1 Modules. AMD/CommonJS/window external interface.
+
+[ ![Codeship Status for radekstepan/grunt-apps-c](https://www.codeship.io/projects/7c42c200-2543-0131-75e4-3aa0f2c98596/status?branch=master)](https://www.codeship.io/projects/8915)
 
 ##Quick start
 
@@ -17,6 +19,7 @@ module.exports = (grunt) ->
                 dest: 'build/app.commonjs.js'
                 options:
                     main: 'src/index.js'
+                    name: 'MyApp'
 
     grunt.loadNpmTasks('grunt-apps-c')
 
@@ -26,11 +29,6 @@ module.exports = (grunt) ->
 
 ##Config
 
-Say you specify a `dest` output file called `build/app.commonjs.js`, you will actually be building two files:
-
-1. `build/app.commonjs.vanilla.js` which contains only your source files translated into JavaScript and wrapped into CommonJS/1.1 Module wrappers.
-2. `build/app.commonjs.require.js` which in additions contains an internal module loader. You probably want to make use of this file. In addition, this loader will be exported globally if an existing `require` loader does not exist.
-
 The `options.main` property specifies which file will be considered the "main" one for your package. Somehow, the external world needs to know what to get when they call `require(package_name)`. If you do not specify this property the following actions are taken:
 
 1. We try make use of the property `main` as specified in your app's `package.json` file. Failing that, we...
@@ -38,7 +36,7 @@ The `options.main` property specifies which file will be considered the "main" o
 
 ##CommonJS/1.1 Modules
 
-The following mould is being used to wrap your modules:
+The following template wraps your modules:
 
 ```javascript
 // filename

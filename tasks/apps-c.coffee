@@ -87,9 +87,10 @@ commonjs = (grunt, cb) ->
 
         # Any opts?
         opts = @options
+            # Main index file.
             'main': do ->
                 # A) Use the main file in `package.json`.
-                return pkg.main if pkg.main
+                return pkg.main if pkg?.main
 
                 # B) Find the index file closest to the root.
                 _(sources)
@@ -100,6 +101,11 @@ commonjs = (grunt, cb) ->
                     score = (input) -> input.split('/').length
                     score(a) - score(b)
                 ).value()[0]
+
+            # Package name.
+            'name': pkg.name if pkg?.name
+
+        return cb 'Package name is not defined' unless opts.name
 
         # Not null?
         return cb 'Main index file not defined' unless opts.main
@@ -125,7 +131,7 @@ commonjs = (grunt, cb) ->
 
                 # Wrap it in the module registry.
                 cb null, moulds.commonjs.module
-                    'package': pkg.name
+                    'package': opts.name
                     'path': source
                     'script': moulds.lines
                         'spaces': 2
@@ -140,19 +146,13 @@ commonjs = (grunt, cb) ->
                 moulds.lines 'spaces': 4, 'lines': module
 
             # Write a vanilla version and one packing a requirerer.
-            async.each [ 'require', 'vanilla' ], (variant, cb) ->
-                out = moulds.commonjs[variant]
-                    'modules': modules
-                    'package': pkg.name
-                    'main': opts.main
+            out = moulds.commonjs.loader
+                'modules': modules
+                'package': opts.name
+                'main': opts.main
 
-                # Inject a suffix.
-                filename = destination.replace /\.([^\.]*)$/, ".#{variant}.$1"
-
-                # Write it.
-                fs.writeFile filename, out, cb
-
-            , cb
+            # Write it.
+            fs.writeFile destination, out, cb
     
     , cb
 
@@ -170,8 +170,8 @@ module.exports = (grunt) ->
         # Once our builder is ready...
         onReady = =>
             # The targets we support.
-            switch @target
-                when 'commonjs'
+            switch
+                when @target.match /^commonjs/
                     commonjs.apply @, [ grunt, cb ]
                 else
                     cb "Unsupported target `#{@target}`"
