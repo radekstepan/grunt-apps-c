@@ -16,7 +16,7 @@ module.exports = (grunt) ->
         apps_c:
             commonjs:
                 src: [ 'src/**/*.{coffee,js,eco}' ]
-                dest: 'build/app.commonjs.js'
+                dest: 'build/app.js'
                 options:
                     main: 'src/index.js'
                     name: 'MyApp'
@@ -27,6 +27,8 @@ module.exports = (grunt) ->
 
 ```
 
+You can now include the `build/app.js` file and, depending on your surrounding environment, you will be able to load it using RequireJS/AMD, CommonJS or straight from `window` under the `MyApp` key.
+
 ##Config
 
 The `options.main` property specifies which file will be considered the "main" one for your package. Somehow, the external world needs to know what to get when they call `require(package_name)`. If you do not specify this property the following actions are taken:
@@ -35,6 +37,10 @@ The `options.main` property specifies which file will be considered the "main" o
 1. try to find the `index.[js|coffee]` file that is closest to the root of your sources.
 
 The `options.name` overrides the name of the package in `package.json`. It specified the name of the exported package as in: `require(name)`.
+
+###Eco Templates
+
+Are precompiled so when you require them, you need to only pass a `context` to them to get a string back.
 
 ##CommonJS/1.1 Modules
 

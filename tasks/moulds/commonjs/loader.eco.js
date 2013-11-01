@@ -204,9 +204,7 @@
   })();
 
   // Return the main app.
-  var main = function() {
-    return require("<%- @package %>/<%- @main %>.js");
-  };
+  var main = require("<%- @package %>/<%- @main %>.js");
 
   // Global on server, window in browser.
   var root = this;
@@ -223,12 +221,12 @@
     module.exports = main;
   }
 
-  // Globally exposed.
+  // Globally exported.
   else {
     root["<%- @package %>"] = main;
   }
 
-  // Expose the app for our internal loader.
+  // Alias our app.
   require.alias("<%- @package %>/<%- @main %>.js", "<%- @package %>/index.js");
 
   // Export internal loader?
