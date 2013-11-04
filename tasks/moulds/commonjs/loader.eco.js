@@ -232,7 +232,7 @@
 
   // Alias our app.
   <% for name in @packages: %>
-  require.alias("<%- name %>/<%- @main %>.js", "<%- @packages[0] %>/index.js");
+  require.alias("<%- @packages[0] %>/<%- @main %>.js", "<%- name %>/index.js");
   <% end %>
 
   // Export internal loader?

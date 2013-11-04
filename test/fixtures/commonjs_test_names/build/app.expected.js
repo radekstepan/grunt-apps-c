@@ -307,7 +307,7 @@
   
   require.alias("TestApp/test/fixtures/commonjs_test_names/src/index.js", "TestApp/index.js");
   
-  require.alias("MyApp/test/fixtures/commonjs_test_names/src/index.js", "TestApp/index.js");
+  require.alias("TestApp/test/fixtures/commonjs_test_names/src/index.js", "MyApp/index.js");
   
 
   // Export internal loader?
