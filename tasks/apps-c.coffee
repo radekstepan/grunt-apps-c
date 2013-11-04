@@ -105,7 +105,10 @@ commonjs = (grunt, cb) ->
             # Package name.
             'name': pkg.name if pkg?.name
 
+        # Make package name into names.
         return cb 'Package name is not defined' unless opts.name
+
+        opts.name = [ opts.name ] unless _.isArray opts.name
 
         # Not null?
         return cb 'Main index file not defined' unless opts.main

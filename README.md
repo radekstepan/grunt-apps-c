@@ -36,7 +36,7 @@ The `options.main` property specifies which file will be considered the "main" o
 1. We try make use of the property `main` as specified in your app's `package.json` file. Failing that, we...
 1. try to find the `index.[js|coffee]` file that is closest to the root of your sources.
 
-The `options.name` overrides the name of the package in `package.json`. It specified the name of the exported package as in: `require(name)`.
+The `options.name` overrides the name of the package in `package.json`. It specified the name of the exported package as in: `require(name)`. One can pass in an array of names, as alternatives, as well.
 
 ###Eco Templates
 

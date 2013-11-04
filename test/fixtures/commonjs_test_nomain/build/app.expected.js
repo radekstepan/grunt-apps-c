@@ -203,7 +203,7 @@
     
     
     // app.coffee
-    require.register('TestApp/test/fixtures/commonjs_test_pass/src/app.js', function(exports, require, module) {
+    require.register('TestApp/test/fixtures/commonjs_test_nomain/src/app.js', function(exports, require, module) {
     
       
       
@@ -211,14 +211,14 @@
 
     
     // index.js
-    require.register('TestApp/test/fixtures/commonjs_test_pass/src/index.js', function(exports, require, module) {
+    require.register('TestApp/test/fixtures/commonjs_test_nomain/src/index.js', function(exports, require, module) {
     
       
     });
 
     
     // template.eco
-    require.register('TestApp/test/fixtures/commonjs_test_pass/src/template.js', function(exports, require, module) {
+    require.register('TestApp/test/fixtures/commonjs_test_nomain/src/template.js', function(exports, require, module) {
     
       module.exports = function(__obj) {
         if (!__obj) __obj = {};
@@ -271,32 +271,36 @@
   })();
 
   // Return the main app.
-  var main = function() {
-    return require("TestApp/test/fixtures/commonjs_test_pass/src/index.js");
-  };
+  var main = require("TestApp/test/fixtures/commonjs_test_nomain/src/index.js");
 
   // Global on server, window in browser.
   var root = this;
 
   // AMD/RequireJS.
   if (typeof define !== 'undefined' && define.amd) {
-    define("TestApp", [], function () {
+  
+    define("TestApp", [ /* load deps ahead of time */ ], function () {
       return main;
     });
+  
   }
 
-  // Node.js/CommonJS.
+  // CommonJS.
   else if (typeof module !== 'undefined' && module.exports) {
     module.exports = main;
   }
 
-  // Globally exposed.
+  // Globally exported.
   else {
+  
     root["TestApp"] = main;
+  
   }
 
-  // Expose the app for our internal loader.
-  require.alias("TestApp/test/fixtures/commonjs_test_pass/src/index.js", "TestApp/index.js");
+  // Alias our app.
+  
+  require.alias("TestApp/test/fixtures/commonjs_test_nomain/src/index.js", "TestApp/index.js");
+  
 
   // Export internal loader?
   root.require = (typeof root.require !== 'undefined') ? root.require : require;

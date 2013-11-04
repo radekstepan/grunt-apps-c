@@ -65,9 +65,9 @@ tests =
                 options:
                     name: 'TestApp'
             , ([ a, b ], cb) ->
-                    _.each errors, assert.ifError
-                    assert.equal a, b
-                    do cb
+                _.each errors, assert.ifError
+                assert.equal a, b
+                do cb
             ]
 
         commonjs_test_noindex: (test) ->
@@ -75,9 +75,19 @@ tests =
                 options:
                     name: 'TestApp'
             , ([ a, b ], cb) ->
-                    assert errors.length
-                    do cb
+                assert errors.length
+                do cb
             ]
+
+        commonjs_test_names: (test) ->
+            [
+                options:
+                    name: [ 'TestApp', 'MyApp' ]
+            , ([ a, b ], cb) ->
+                _.each errors, assert.ifError
+                assert.equal a, b
+                do cb
+            ]            
 
 # Export Mocha tests.
 for test, options of tests.apps_c then do (test, options) ->
@@ -97,7 +107,7 @@ for test, options of tests.apps_c then do (test, options) ->
             async.map [ 'app.actual.js', 'app.expected.js' ], (name, cb) ->
                 fs.readFile dir + '/fixtures/' + test + '/build/' + name, 'utf-8', (err, file) ->
                     # Silence!
-                    do cb
+                    cb null, file
             , cb
 
         # Compare sending it to a handler.

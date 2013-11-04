@@ -200,22 +200,93 @@
 
   // All our modules will see our own require.
   (function() {
-    <%- @modules.join('\n') %>
+    
+    
+    // app.coffee
+    require.register('TestApp,MyApp/test/fixtures/commonjs_test_names/src/app.js', function(exports, require, module) {
+    
+      
+      
+    });
+
+    
+    // index.js
+    require.register('TestApp,MyApp/test/fixtures/commonjs_test_names/src/index.js', function(exports, require, module) {
+    
+      
+    });
+
+    
+    // template.eco
+    require.register('TestApp,MyApp/test/fixtures/commonjs_test_names/src/template.js', function(exports, require, module) {
+    
+      module.exports = function(__obj) {
+        if (!__obj) __obj = {};
+        var __out = [], __capture = function(callback) {
+          var out = __out, result;
+          __out = [];
+          callback.call(this);
+          result = __out.join('');
+          __out = out;
+          return __safe(result);
+        }, __sanitize = function(value) {
+          if (value && value.ecoSafe) {
+            return value;
+          } else if (typeof value !== 'undefined' && value != null) {
+            return __escape(value);
+          } else {
+            return '';
+          }
+        }, __safe, __objSafe = __obj.safe, __escape = __obj.escape;
+        __safe = __obj.safe = function(value) {
+          if (value && value.ecoSafe) {
+            return value;
+          } else {
+            if (!(typeof value !== 'undefined' && value != null)) value = '';
+            var result = new String(value);
+            result.ecoSafe = true;
+            return result;
+          }
+        };
+        if (!__escape) {
+          __escape = __obj.escape = function(value) {
+            return ('' + value)
+              .replace(/&/g, '&amp;')
+              .replace(/</g, '&lt;')
+              .replace(/>/g, '&gt;')
+              .replace(/"/g, '&quot;');
+          };
+        }
+        (function() {
+          (function() {
+          
+          
+          }).call(this);
+          
+        }).call(__obj);
+        __obj.safe = __objSafe, __obj.escape = __escape;
+        return __out.join('');
+      }
+    });
   })();
 
   // Return the main app.
-  var main = require("<%- @package[0] %>/<%- @main %>.js");
+  var main = require("TestApp/test/fixtures/commonjs_test_names/src/index.js");
 
   // Global on server, window in browser.
   var root = this;
 
   // AMD/RequireJS.
   if (typeof define !== 'undefined' && define.amd) {
-  <% for name in @package: %>
-    define("<%- name %>", [ /* load deps ahead of time */ ], function () {
+  
+    define("TestApp", [ /* load deps ahead of time */ ], function () {
       return main;
     });
-  <% end %>
+  
+    define("MyApp", [ /* load deps ahead of time */ ], function () {
+      return main;
+    });
+  
   }
 
   // CommonJS.
@@ -225,15 +296,19 @@
 
   // Globally exported.
   else {
-  <% for name in @package: %>
-    root["<%- name %>"] = main;
-  <% end %>
+  
+    root["TestApp"] = main;
+  
+    root["MyApp"] = main;
+  
   }
 
   // Alias our app.
-  <% for name in @package: %>
-  require.alias("<%- name %>/<%- @main %>.js", "<%- name %>/index.js");
-  <% end %>
+  
+  require.alias("TestApp/test/fixtures/commonjs_test_names/src/index.js", "TestApp/index.js");
+  
+  require.alias("MyApp/test/fixtures/commonjs_test_names/src/index.js", "MyApp/index.js");
+  
 
   // Export internal loader?
   root.require = (typeof root.require !== 'undefined') ? root.require : require;
