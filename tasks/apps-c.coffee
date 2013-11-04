@@ -134,7 +134,7 @@ commonjs = (grunt, cb) ->
 
                 # Wrap it in the module registry.
                 cb null, moulds.commonjs.module
-                    'package': opts.name
+                    'package': opts.name[0]
                     'path': source
                     'script': moulds.lines
                         'spaces': 2
@@ -151,7 +151,7 @@ commonjs = (grunt, cb) ->
             # Write a vanilla version and one packing a requirerer.
             out = moulds.commonjs.loader
                 'modules': modules
-                'package': opts.name
+                'packages': opts.name
                 'main': opts.main
 
             # Write it.

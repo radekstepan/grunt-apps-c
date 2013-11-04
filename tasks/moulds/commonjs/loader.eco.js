@@ -204,14 +204,14 @@
   })();
 
   // Return the main app.
-  var main = require("<%- @package[0] %>/<%- @main %>.js");
+  var main = require("<%- @packages[0] %>/<%- @main %>.js");
 
   // Global on server, window in browser.
   var root = this;
 
   // AMD/RequireJS.
   if (typeof define !== 'undefined' && define.amd) {
-  <% for name in @package: %>
+  <% for name in @packages: %>
     define("<%- name %>", [ /* load deps ahead of time */ ], function () {
       return main;
     });
@@ -225,14 +225,14 @@
 
   // Globally exported.
   else {
-  <% for name in @package: %>
+  <% for name in @packages: %>
     root["<%- name %>"] = main;
   <% end %>
   }
 
   // Alias our app.
-  <% for name in @package: %>
-  require.alias("<%- name %>/<%- @main %>.js", "<%- name %>/index.js");
+  <% for name in @packages: %>
+  require.alias("<%- name %>/<%- @main %>.js", "<%- @packages[0] %>/index.js");
   <% end %>
 
   // Export internal loader?

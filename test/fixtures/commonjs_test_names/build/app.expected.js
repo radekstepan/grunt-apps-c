@@ -203,7 +203,7 @@
     
     
     // app.coffee
-    require.register('TestApp,MyApp/test/fixtures/commonjs_test_names/src/app.js', function(exports, require, module) {
+    require.register('TestApp/test/fixtures/commonjs_test_names/src/app.js', function(exports, require, module) {
     
       
       
@@ -211,14 +211,14 @@
 
     
     // index.js
-    require.register('TestApp,MyApp/test/fixtures/commonjs_test_names/src/index.js', function(exports, require, module) {
+    require.register('TestApp/test/fixtures/commonjs_test_names/src/index.js', function(exports, require, module) {
     
       
     });
 
     
     // template.eco
-    require.register('TestApp,MyApp/test/fixtures/commonjs_test_names/src/template.js', function(exports, require, module) {
+    require.register('TestApp/test/fixtures/commonjs_test_names/src/template.js', function(exports, require, module) {
     
       module.exports = function(__obj) {
         if (!__obj) __obj = {};
@@ -307,7 +307,7 @@
   
   require.alias("TestApp/test/fixtures/commonjs_test_names/src/index.js", "TestApp/index.js");
   
-  require.alias("MyApp/test/fixtures/commonjs_test_names/src/index.js", "MyApp/index.js");
+  require.alias("MyApp/test/fixtures/commonjs_test_names/src/index.js", "TestApp/index.js");
   
 
   // Export internal loader?
