@@ -1,6 +1,6 @@
 #grunt-apps-c
 
-CoffeeScript, JavaScript, Eco in CommonJS/1.1 Modules. AMD/CommonJS/window external interface.
+CoffeeScript, JavaScript, Eco, Mustache as CommonJS/1.1 Modules. AMD/CommonJS/window external interface.
 
 [ ![Codeship Status for radekstepan/grunt-apps-c](https://www.codeship.io/projects/7c42c200-2543-0131-75e4-3aa0f2c98596/status?branch=master)](https://www.codeship.io/projects/8915)
 
@@ -38,17 +38,17 @@ The `options.main` property specifies which file will be considered the "main" o
 
 The `options.name` overrides the name of the package in `package.json`. It specified the name of the exported package as in: `require(name)`. One can pass in an array of names, as alternatives, as well.
 
-###Eco Templates
+###Templates
 
-Are precompiled so when you require them, you need to only pass a `context` to them to get a string back.
+Both Eco & Mustache templates come precompiled so when you require them, you get back a function that accepts a `context` and returns a string back.
 
 ##CommonJS/1.1 Modules
 
 The following template wraps your modules:
 
 ```javascript
-// filename
+// filename.coffee
 require.register('package/path.js', function(exports, require, module) {
-  // ...
+    // ...
 });
 ```

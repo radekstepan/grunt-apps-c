@@ -3,79 +3,82 @@ async = require 'async'
 glob  = require 'glob'
 path  = require 'path'
 fs    = require 'fs'
-
 eco = require 'eco'
-cs  = require 'coffee-script'
 
 dir = __dirname
 
-# Load moulds.
-moulds = {} ; ready = no ; callbacks = []
+# Place all moulds/templates here.
+moulds = {}
 
-async.waterfall [ (cb) ->
-    glob dir + '/moulds/**/*.eco.js', cb
+# Place all source file handlers here.
+handlers = {}
 
-, (files, cb) ->
-    # Process in parallel.
-    async.each files, (file, cb) ->
-        # Is it a file?
-        fs.stat file, (err, stats) ->
-            return cb err if err
+# We start not initialized yet.
+ready = no
 
-            # Skip directories.
-            return cb null unless do stats.isFile
+# Call these functions when we are ready.
+callbacks = []
 
-            # Read the mould.
-            fs.readFile file, 'utf8', (err, mould) ->
-                return cb err if err
+# Initialize the builder.
+async.parallel
 
-                # Get a relative from the file.
-                pointer = moulds
-                for i, part of parts = file.match(/moulds\/(.*)\.eco\.js$/)[1].split('/')
-                    if parts.length is +i + 1
-                        # Make into an Eco function.
-                        pointer[part] = (context) ->
-                            eco.render mould, context
-                    else
-                        pointer = pointer[part] ?= {}
+    # The moulds.
+    'moulds': (cb) ->
+        async.waterfall [ (cb) ->
+            glob dir + '/moulds/**/*.eco.js', cb
 
-                cb null
-    , cb
+        , (files, cb) ->
+            # Process in parallel.
+            async.each files, (file, cb) ->
+                # Is it a file?
+                fs.stat file, (err, stats) ->
+                    return cb err if err
 
-], (err) ->
+                    # Skip directories.
+                    return cb null unless do stats.isFile
+
+                    # Read the mould.
+                    fs.readFile file, 'utf8', (err, mould) ->
+                        return cb err if err
+
+                        # Get a relative from the file.
+                        pointer = moulds
+                        for i, part of parts = file.match(/moulds\/(.*)\.eco\.js$/)[1].split('/')
+                            if parts.length is +i + 1
+                                # Make into an Eco function.
+                                pointer[part] = (context) ->
+                                    eco.render mould, context
+                            else
+                                pointer = pointer[part] ?= {}
+
+                        cb null
+            , cb
+
+        ], cb
+
+    # The handlers.
+    'handlers': (cb) ->
+        async.waterfall [ (cb) ->
+            glob dir + '/handlers/**/*.coffee', cb
+
+        , (files, cb) ->
+            # Require them.
+            for file in files
+                name = path.basename file, '.coffee'
+                handlers[name] = require file
+
+            do cb
+
+        ], cb
+
+
+, (err) ->
     # Trouble?
     process.exit(1) if err
 
     # Dequeue.
     ready = yes
     ( do cb for cb in callbacks )
-
-# The keys represent the file extensions.
-handlers =
-    # Handle CoffeeScript.
-    coffee: (filepath, cb) ->
-        fs.readFile filepath, 'utf8', (err, src) ->
-            try
-                js = cs.compile src, 'bare': 'on'
-                cb null, js
-            catch err
-                cb err
-
-    # Handle a generic file (JavaScript).
-    js: (filepath, cb) ->
-        fs.readFile filepath, 'utf8', cb
-
-    # Handle Eco templates.
-    eco: (filepath, cb) ->
-        async.waterfall [ (cb) ->
-            fs.readFile filepath, 'utf8', cb
-        , (src, cb) ->
-            try
-                template = eco.precompile src
-                return cb null, 'module.exports = ' + template
-            catch err
-                return cb err
-        ], cb
 
 commonjs = (grunt, cb) ->
     pkg = grunt.config.data.pkg
