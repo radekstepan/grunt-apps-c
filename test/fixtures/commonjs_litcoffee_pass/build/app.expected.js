@@ -202,6 +202,16 @@
   (function() {
     
     
+    // app.litcoffee
+    require.register('TestApp/test/fixtures/commonjs_litcoffee_pass/src/app.js', function(exports, require, module) {
+    
+      module.exports = function() {
+        return console.log('hello');
+      };
+      
+    });
+
+    
     // index.js
     require.register('TestApp/test/fixtures/commonjs_litcoffee_pass/src/index.js', function(exports, require, module) {
     

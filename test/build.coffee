@@ -34,7 +34,7 @@ dir = __dirname
 
 # Some defaults true to all tests.
 defaults = (test) ->
-    src: [ "test/fixtures/#{test}/src/**/*.{coffee,js,eco}" ]
+    src: [ "test/fixtures/#{test}/src/**/*.{coffee,litcoffee,js,eco}" ]
     dest: "test/fixtures/#{test}/build/app.actual.js"
 
 # The individual Grunt task options extending the defaults.
