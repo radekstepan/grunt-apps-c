@@ -87,7 +87,17 @@ tests =
                 _.each errors, assert.ifError
                 assert.equal a, b
                 do cb
-            ]            
+            ]
+
+        commonjs_litcoffee_pass: (test) ->
+            [
+                options:
+                    name: 'TestApp'
+            , ([ a, b ], cb) ->
+                _.each errors, assert.ifError
+                assert.equal a, b
+                do cb
+            ]
 
 # Export Mocha tests.
 for test, options of tests.apps_c then do (test, options) ->

@@ -38,6 +38,10 @@ The `options.main` property specifies which file will be considered the "main" o
 
 The `options.name` overrides the name of the package in `package.json`. It specified the name of the exported package as in: `require(name)`. One can pass in an array of names, as alternatives, as well.
 
+##Types
+
+The filetypes you can use (handlers) are listed in `tasks/`. The base filename of a handler represents the extension we match against.
+
 ###Templates
 
 Both Eco & Mustache templates come precompiled so when you require them, you get back a function that accepts a `context` and returns a string back.
