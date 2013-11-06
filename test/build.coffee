@@ -34,7 +34,7 @@ dir = __dirname
 
 # Some defaults true to all tests.
 defaults = (test) ->
-    src: [ "test/fixtures/#{test}/src/**/*.{coffee,litcoffee,js,eco}" ]
+    src: [ "test/fixtures/#{test}/src/**/*.{coffee,litcoffee,js,eco,dust}" ]
     dest: "test/fixtures/#{test}/build/app.actual.js"
 
 # The individual Grunt task options extending the defaults.
@@ -89,7 +89,7 @@ tests =
                 do cb
             ]
 
-        commonjs_litcoffee_pass: (test) ->
+        commonjs_test_litcoffee: (test) ->
             [
                 options:
                     name: 'TestApp'

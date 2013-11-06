@@ -203,7 +203,7 @@
     
     
     // app.litcoffee
-    require.register('TestApp/test/fixtures/commonjs_litcoffee_pass/src/app.js', function(exports, require, module) {
+    require.register('TestApp/test/fixtures/commonjs_test_litcoffee/src/app.js', function(exports, require, module) {
     
       module.exports = function() {
         return console.log('hello');
@@ -213,14 +213,14 @@
 
     
     // index.js
-    require.register('TestApp/test/fixtures/commonjs_litcoffee_pass/src/index.js', function(exports, require, module) {
+    require.register('TestApp/test/fixtures/commonjs_test_litcoffee/src/index.js', function(exports, require, module) {
     
       
     });
 
     
     // template.eco
-    require.register('TestApp/test/fixtures/commonjs_litcoffee_pass/src/template.js', function(exports, require, module) {
+    require.register('TestApp/test/fixtures/commonjs_test_litcoffee/src/template.js', function(exports, require, module) {
     
       module.exports = function(__obj) {
         if (!__obj) __obj = {};
@@ -273,7 +273,7 @@
   })();
 
   // Return the main app.
-  var main = require("TestApp/test/fixtures/commonjs_litcoffee_pass/src/index.js");
+  var main = require("TestApp/test/fixtures/commonjs_test_litcoffee/src/index.js");
 
   // Global on server, window in browser.
   var root = this;
@@ -301,7 +301,7 @@
 
   // Alias our app.
   
-  require.alias("TestApp/test/fixtures/commonjs_litcoffee_pass/src/index.js", "TestApp/index.js");
+  require.alias("TestApp/test/fixtures/commonjs_test_litcoffee/src/index.js", "TestApp/index.js");
   
 
   // Export internal loader?
