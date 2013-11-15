@@ -202,7 +202,7 @@
   var root = this;
 
   // Do we already have require loader?
-  require = (typeof root.require !== 'undefined') ? root.require : require;
+  root.require = require = (typeof root.require !== 'undefined') ? root.require : require;
 
   // All our modules will see our own require.
   (function() {
