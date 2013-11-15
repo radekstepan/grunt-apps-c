@@ -198,6 +198,12 @@
     return localRequire;
   };
 
+  // Global on server, window in browser.
+  var root = this;
+
+  // Do we already have require loader?
+  require = (typeof root.require !== 'undefined') ? root.require : require;
+
   // All our modules will see our own require.
   (function() {
     <%- @modules.join('\n') %>
@@ -205,9 +211,6 @@
 
   // Return the main app.
   var main = require("<%- @packages[0] %>/<%- @main %>.js");
-
-  // Global on server, window in browser.
-  var root = this;
 
   // AMD/RequireJS.
   if (typeof define !== 'undefined' && define.amd) {
@@ -234,7 +237,4 @@
   <% for name in @packages: %>
   require.alias("<%- @packages[0] %>/<%- @main %>.js", "<%- name %>/index.js");
   <% end %>
-
-  // Export internal loader?
-  root.require = (typeof root.require !== 'undefined') ? root.require : require;
 })();
