@@ -133,7 +133,7 @@ commonjs = (grunt, cb) ->
 
             # Run the handler.
             handler source, (err, result) ->
-                return cb err if err
+                return cb source + ': ' + do err.toString if err
 
                 # Wrap it in the module registry.
                 cb null, moulds.commonjs.module
