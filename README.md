@@ -56,3 +56,10 @@ require.register('package/path.js', function(exports, require, module) {
     // ...
 });
 ```
+
+##Used by
+
+1. [intermine-apps-c](https://github.com/intermine/intermine-apps-c)
+1. [pomme.js](https://github.com/radekstepan/pomme.js) - JS frames communication
+1. [deadmonton](https://github.com/radekstepan/deadmonton) - visualizing crime in Edmonton
+1. [github-burndown-chart](https://github.com/radekstepan/github-burndown-chart)
