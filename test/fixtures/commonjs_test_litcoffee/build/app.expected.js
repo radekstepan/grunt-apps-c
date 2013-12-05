@@ -6,7 +6,7 @@
    * @return {Object} exports
    * @api public
    */
-  function require(path, parent, orig) {
+  var require = function(path, parent, orig) {
     var resolved = require.resolve(path);
 
     // lookup failed
@@ -164,7 +164,7 @@
      * The relative require() itself.
      */
 
-    function localRequire(path) {
+    var localRequire = function(path) {
       var resolved = localRequire.resolve(path);
       return require(resolved, parent, path);
     }
@@ -202,14 +202,14 @@
   var root = this;
 
   // Do we already have require loader?
-  root.require = require = (typeof root.require !== 'undefined') ? root.require : require;
+  root.require = (typeof root.require !== 'undefined') ? root.require : require;
 
-  // All our modules will see our own require.
+  // All our modules will use global require.
   (function() {
     
     
     // app.litcoffee
-    require.register('TestApp/test/fixtures/commonjs_test_litcoffee/src/app.js', function(exports, require, module) {
+    root.require.register('TestApp/test/fixtures/commonjs_test_litcoffee/src/app.js', function(exports, require, module) {
     
       module.exports = function() {
         return console.log('hello');
@@ -219,14 +219,14 @@
 
     
     // index.js
-    require.register('TestApp/test/fixtures/commonjs_test_litcoffee/src/index.js', function(exports, require, module) {
+    root.require.register('TestApp/test/fixtures/commonjs_test_litcoffee/src/index.js', function(exports, require, module) {
     
       
     });
 
     
     // template.eco
-    require.register('TestApp/test/fixtures/commonjs_test_litcoffee/src/template.js', function(exports, require, module) {
+    root.require.register('TestApp/test/fixtures/commonjs_test_litcoffee/src/template.js', function(exports, require, module) {
     
       module.exports = function(__obj) {
         if (!__obj) __obj = {};
@@ -279,7 +279,7 @@
   })();
 
   // Return the main app.
-  var main = require("TestApp/test/fixtures/commonjs_test_litcoffee/src/index.js");
+  var main = root.require("TestApp/test/fixtures/commonjs_test_litcoffee/src/index.js");
 
   // AMD/RequireJS.
   if (typeof define !== 'undefined' && define.amd) {
@@ -304,6 +304,6 @@
 
   // Alias our app.
   
-  require.alias("TestApp/test/fixtures/commonjs_test_litcoffee/src/index.js", "TestApp/index.js");
+  root.require.alias("TestApp/test/fixtures/commonjs_test_litcoffee/src/index.js", "TestApp/index.js");
   
 })();

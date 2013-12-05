@@ -1,6 +1,6 @@
 {
     "name": "grunt-apps-c",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "description": "CoffeeScript, JavaScript, Eco as CommonJS/1.1 Modules",
     "dependencies": {
         "lodash": "~2.2.1",

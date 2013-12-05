@@ -6,7 +6,7 @@
    * @return {Object} exports
    * @api public
    */
-  function require(path, parent, orig) {
+  var require = function(path, parent, orig) {
     var resolved = require.resolve(path);
 
     // lookup failed
@@ -164,7 +164,7 @@
      * The relative require() itself.
      */
 
-    function localRequire(path) {
+    var localRequire = function(path) {
       var resolved = localRequire.resolve(path);
       return require(resolved, parent, path);
     }
@@ -202,15 +202,15 @@
   var root = this;
 
   // Do we already have require loader?
-  root.require = require = (typeof root.require !== 'undefined') ? root.require : require;
+  root.require = (typeof root.require !== 'undefined') ? root.require : require;
 
-  // All our modules will see our own require.
+  // All our modules will use global require.
   (function() {
     <%- @modules.join('\n') %>
   })();
 
   // Return the main app.
-  var main = require("<%- @packages[0] %>/<%- @main %>.js");
+  var main = root.require("<%- @packages[0] %>/<%- @main %>.js");
 
   // AMD/RequireJS.
   if (typeof define !== 'undefined' && define.amd) {
@@ -235,6 +235,6 @@
 
   // Alias our app.
   <% for name in @packages: %>
-  require.alias("<%- @packages[0] %>/<%- @main %>.js", "<%- name %>/index.js");
+  root.require.alias("<%- @packages[0] %>/<%- @main %>.js", "<%- name %>/index.js");
   <% end %>
 })();
