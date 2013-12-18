@@ -1,7 +1,7 @@
 {
     "name": "grunt-apps-c",
-    "version": "0.1.9",
-    "description": "CoffeeScript, JavaScript, Eco as CommonJS/1.1 Modules",
+    "version": "0.1.10",
+    "description": "CoffeeScript, JavaScript, Eco, Mustache as CommonJS/1.1 Modules",
     "dependencies": {
         "lodash": "~2.2.1",
         "async": "~0.2.9",
@@ -25,7 +25,10 @@
         "url": "git@github.com:radekstepan/grunt-apps-c.git"
     },
     "keywords": [
-        "gruntplugin"
+        "gruntplugin",
+        "coffeescript",
+        "eco",
+        "mustache"
     ],
     "author": "Radek <rs676@cam.ac.uk>",
     "scripts": {

@@ -1,6 +1,6 @@
 #grunt-apps-c
 
-CoffeeScript, JavaScript, Eco as CommonJS/1.1 Modules. AMD/CommonJS/window external interface.
+CoffeeScript, JavaScript, Eco, Mustache as CommonJS/1.1 Modules. AMD/CommonJS/window external interface.
 
 [ ![Codeship Status for radekstepan/grunt-apps-c](https://www.codeship.io/projects/7c42c200-2543-0131-75e4-3aa0f2c98596/status?branch=master)](https://www.codeship.io/projects/8915)
 
@@ -15,7 +15,7 @@ module.exports = (grunt) ->
         
         apps_c:
             commonjs:
-                src: [ 'src/**/*.{coffee,js,eco}' ]
+                src: [ 'src/**/*.{coffee,js,eco,mustache}' ]
                 dest: 'build/app.js'
                 options:
                     main: 'src/index.js'
@@ -44,7 +44,27 @@ The filetypes you can use (handlers) are listed in `tasks/`. The base filename o
 
 ###Templates
 
-Eco templates come precompiled so when you require them, you get back a function that accepts a `context` and returns a string back.
+####Eco
+
+Eco templates come precompiled so when you require them, you get back a function that accepts a `context` and returns a string back that you inject into DOM.
+
+An example:
+
+```javascript
+var template = require('./templates/layout');
+$('body').html(template({ 'name': 'Radek' }));
+```
+
+####Mustache
+
+Mustache templates are transpiled into an exported string, so you need to use a library to compile it into a template that can actually be rendered.
+
+For example, to use them inside [canJS](http://canjs.com/guides/Mustache.html) you can do the following:
+
+```javascript
+var template = require('./templates/layout');
+can.view.mustache('layout', template);
+```
 
 ##CommonJS/1.1 Modules
 
@@ -56,6 +76,12 @@ require.register('package/path.js', function(exports, require, module) {
     // ...
 });
 ```
+
+##Changelog
+
+####0.1.10
+
+- Support for [Mustache](http://mustache.github.io/) logic-less templates. Templates are transpiled into an exported string so you need to then feed it into your particular implementation like [canJS](http://canjs.com/guides/Mustache.html).
 
 ##Used by
 
