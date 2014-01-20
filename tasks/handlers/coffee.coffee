@@ -7,4 +7,8 @@ module.exports = (filepath, cb) ->
             js = cs.compile src, 'bare': 'on'
             cb null, js
         catch err
+            # Adjust location?
+            if err.location
+                err.line = err.location.first_line + 1
+                err.column = err.location.first_column + 1
             cb err

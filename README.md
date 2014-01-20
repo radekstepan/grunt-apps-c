@@ -79,13 +79,17 @@ require.register('package/path.js', function(exports, require, module) {
 
 ##Changelog
 
+####0.1.11
+
+- Showing line number when error is thrown in a task.
+
 ####0.1.10
 
 - Support for [Mustache](http://mustache.github.io/) logic-less templates. Templates are transpiled into an exported string so you need to then feed it into your particular implementation like [canJS](http://canjs.com/guides/Mustache.html).
 
 ##Used by
 
-1. [intermine-apps-c](https://github.com/intermine/intermine-apps-c)
+1. [intermine-apps-c](https://github.com/intermine/intermine-apps-c) - collection of InterMine apps
 1. [pomme.js](https://github.com/radekstepan/pomme.js) - JS frames communication
 1. [deadmonton](https://github.com/radekstepan/deadmonton) - visualizing crime in Edmonton
 1. [github-burndown-chart](https://github.com/radekstepan/github-burndown-chart)

@@ -1,9 +1,10 @@
-_     = require 'lodash'
-async = require 'async'
-glob  = require 'glob'
-path  = require 'path'
-fs    = require 'fs'
-eco = require 'eco'
+_      = require 'lodash'
+async  = require 'async'
+glob   = require 'glob'
+path   = require 'path'
+fs     = require 'fs'
+eco    = require 'eco'
+colors = require 'colors' # used by Grunt, require if we are running tests
 
 dir = __dirname
 
@@ -133,7 +134,14 @@ commonjs = (grunt, cb) ->
 
             # Run the handler.
             handler source, (err, result) ->
-                return cb source + ': ' + do err.toString if err
+                return cb(do ->
+                    # The whole error text line.
+                    text = source
+                    text += ":#{err.line}" if err.line
+                    text += ":#{err.column}" if err.column
+                    text += ': error'
+                    text += ": #{err.message}" if err.message
+                ) if err
 
                 # Wrap it in the module registry.
                 cb null, moulds.commonjs.module
@@ -163,15 +171,15 @@ commonjs = (grunt, cb) ->
     , cb
 
 module.exports = (grunt) ->
-    grunt.registerMultiTask 'apps_c', 'Apps/C - CoffeeScript, JavaScript, Eco', ->
+    grunt.registerMultiTask 'apps_c', 'CoffeeScript, JavaScript, Eco, Mustache as CommonJS/1.1 Modules', ->
         # Run in async.
         done = do @async
 
-        # Wrapper for error logging.
+        # Wrapper for error logging, done callback expects a boolean.
         cb = (err) ->
             return do done unless err
             grunt.log.error (do err.toString).red
-            done false
+            done no
 
         # Once our builder is ready...
         onReady = =>
