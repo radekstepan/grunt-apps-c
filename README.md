@@ -114,7 +114,9 @@ var template = require('./templates/layout');
 can.view.mustache('layout', template);
 ```
 
-##CommonJS/1.1 Modules
+##Modules
+
+###CommonJS/1.1 Modules
 
 The following template wraps your modules:
 
@@ -125,7 +127,17 @@ require.register('package/path.js', function(exports, require, module) {
 });
 ```
 
+You can debug all the registered modules in a browser like so:
+
+```javascript
+Object.keys(require.modules)
+```
+
 ##Changelog
+
+####0.1.13
+
+- Detect duplicates as when say `.coffee` and `.eco` files are both transpiled into one and the same output module.
 
 ####0.1.12
 
@@ -134,7 +146,7 @@ require.register('package/path.js', function(exports, require, module) {
 
 ####0.1.11-1
 
-- Showing line number when error is thrown in a task.
+- Showing line number when error is thrown in a task (CoffeeScript atmo).
 
 ####0.1.10
 

@@ -127,6 +127,9 @@ commonjs = (grunt, cb) ->
         # Remove the extension. It will be a `.js` one.
         opts.main = opts.main.split('.')[0...-1].join('.')
 
+        # Keep track of outputs to detect dupes.
+        outputs = []
+
         # For each source.
         async.map sources, (source, cb) ->
             # Find the handler.
@@ -144,10 +147,19 @@ commonjs = (grunt, cb) ->
                     text += ": #{err.message}" if err.message
                 ) if err
 
+                # Form the output path, always JS.
+                output = source.replace /\.[^/.]+$/, '.js'
+
+                # Do we have a dupe?
+                return cb "Duplicate file #{output.bold}" if output in outputs
+
+                # I guess not...
+                outputs.push output
+
                 # Wrap it in the module registry.
                 cb null, moulds.commonjs.module
                     'package': opts.name[0]
-                    'path': source
+                    'path': { source, output }
                     'script': moulds.lines
                         'spaces': 2
                         'lines': result

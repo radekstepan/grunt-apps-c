@@ -146,6 +146,19 @@ tests =
                 do cb
             ]
 
+        commonjs_test_dupes: (test) ->
+            [
+                options:
+                    main: "test/fixtures/#{test}/src/index.js"
+                    name: 'TestApp'
+            , ([ a, b ], cb) ->
+                assert.deepEqual errors, [
+                    'Duplicate file test/fixtures/commonjs_test_dupes/src/index.js',
+                    'Error: Task "apps_c:commonjs_test_dupes" failed.'
+                ]
+                do cb
+            ]
+
         loader_test_only: (test) ->
             [ {}, ([ a, b ], cb) ->
                 _.each errors, assert.ifError

@@ -209,7 +209,6 @@
   // All our modules will use global require.
   (function() {
     
-    
     // app.coffee
     root.require.register('TestApp/test/fixtures/commonjs_test_nomain/src/app.js', function(exports, require, module) {
     
@@ -217,14 +216,12 @@
       
     });
 
-    
     // index.js
     root.require.register('TestApp/test/fixtures/commonjs_test_nomain/src/index.js', function(exports, require, module) {
     
       
     });
 
-    
     // template.eco
     root.require.register('TestApp/test/fixtures/commonjs_test_nomain/src/template.js', function(exports, require, module) {
     

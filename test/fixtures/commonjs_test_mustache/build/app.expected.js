@@ -209,14 +209,12 @@
   // All our modules will use global require.
   (function() {
     
-    
     // index.js
     root.require.register('TestApp/test/fixtures/commonjs_test_mustache/src/index.js', function(exports, require, module) {
     
       
     });
 
-    
     // template.mustache
     root.require.register('TestApp/test/fixtures/commonjs_test_mustache/src/template.js', function(exports, require, module) {
     
