@@ -30,40 +30,16 @@ You can now include the `build/app.js` file and, depending on your surrounding e
 
 ##Config
 
+###Main module
+
 The `options.main` property specifies which file will be considered the "main" one for your package. Somehow, the external world needs to know what to get when they call `require(package_name)`. If you do not specify this property the following actions are taken:
 
 1. We try make use of the property `main` as specified in your app's `package.json` file. Failing that, we...
 1. try to find the `index.[js|coffee]` file that is closest to the root of your sources.
 
+###Package name
+
 The `options.name` overrides the name of the package in `package.json`. It specified the name of the exported package as in: `require(name)`. One can pass in an array of names, as alternatives, as well.
-
-##Types
-
-The filetypes you can use (handlers) are listed in `tasks/`. The base filename of a handler represents the extension we match against.
-
-###Templates
-
-####Eco
-
-Eco templates come precompiled so when you require them, you get back a function that accepts a `context` and returns a string back that you inject into DOM.
-
-An example:
-
-```javascript
-var template = require('./templates/layout');
-$('body').html(template({ 'name': 'Radek' }));
-```
-
-####Mustache
-
-Mustache templates are transpiled into an exported string, so you need to use a library to compile it into a template that can actually be rendered.
-
-For example, to use them inside [canJS](http://canjs.com/guides/Mustache.html) you can do the following:
-
-```javascript
-var template = require('./templates/layout');
-can.view.mustache('layout', template);
-```
 
 ###Loader only
 
@@ -109,6 +85,34 @@ module.exports = (grunt) ->
 ```
 
 Notice that we are asking for a `loader` target and are providing only `dest`; file location where our loader will be created.
+
+##Types
+
+The filetypes you can use (handlers) are listed in `tasks/`. The base filename of a handler represents the extension we match against.
+
+###Templates
+
+####Eco
+
+Eco templates come precompiled so when you require them, you get back a function that accepts a `context` and returns a string back that you inject into DOM.
+
+An example:
+
+```javascript
+var template = require('./templates/layout');
+$('body').html(template({ 'name': 'Radek' }));
+```
+
+####Mustache
+
+Mustache templates are transpiled into an exported string, so you need to use a library to compile it into a template that can actually be rendered.
+
+For example, to use them inside [canJS](http://canjs.com/guides/Mustache.html) you can do the following:
+
+```javascript
+var template = require('./templates/layout');
+can.view.mustache('layout', template);
+```
 
 ##CommonJS/1.1 Modules
 
