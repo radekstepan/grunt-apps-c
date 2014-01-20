@@ -79,7 +79,7 @@ require.register('package/path.js', function(exports, require, module) {
 
 ##Changelog
 
-####0.1.11
+####0.1.11-1
 
 - Showing line number when error is thrown in a task.
 
