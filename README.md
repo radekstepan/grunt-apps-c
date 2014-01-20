@@ -6,7 +6,7 @@ CoffeeScript, JavaScript, Eco, Mustache as CommonJS/1.1 Modules. AMD/CommonJS/wi
 
 ##Quick start
 
-Example `Gruntfile`:
+Example `Gruntfile.coffee`:
 
 ```coffeescript
 module.exports = (grunt) ->
@@ -24,7 +24,6 @@ module.exports = (grunt) ->
     grunt.loadNpmTasks('grunt-apps-c')
 
     grunt.registerTask('default', [ 'apps_c' ])
-
 ```
 
 You can now include the `build/app.js` file and, depending on your surrounding environment, you will be able to load it using RequireJS/AMD, CommonJS or straight from `window` under the `MyApp` key.
@@ -66,6 +65,51 @@ var template = require('./templates/layout');
 can.view.mustache('layout', template);
 ```
 
+###Loader only
+
+Sometimes the occasion calls for a loader to be separated out into its own file. One might want, for example, include a loader, then vendor dependencies and then the actual app build.
+
+To create a build in `dest` without the loader included:
+
+```coffeescript
+module.exports = (grunt) ->
+    grunt.initConfig
+        pkg: grunt.file.readJSON("package.json")
+        
+        apps_c:
+            commonjs:
+                src: [ 'src/**/*.{coffee,js,eco,mustache}' ]
+                dest: 'build/app.js'
+                options:
+                    main:   'src/index.js'
+                    name:   'MyApp'
+                    loader: no
+
+    grunt.loadNpmTasks('grunt-apps-c')
+
+    grunt.registerTask('default', [ 'apps_c' ])
+```
+
+Notice the boolean `loader` option.
+
+By the same token, you might want to produce only a loader:
+
+```coffeescript
+module.exports = (grunt) ->
+    grunt.initConfig
+        pkg: grunt.file.readJSON("package.json")
+        
+        apps_c:
+            loader:
+                dest: 'build/loader.js'
+
+    grunt.loadNpmTasks('grunt-apps-c')
+
+    grunt.registerTask('default', [ 'apps_c' ])
+```
+
+Notice that we are asking for a `loader` target and are providing only `dest`; file location where our loader will be created.
+
 ##CommonJS/1.1 Modules
 
 The following template wraps your modules:
@@ -78,6 +122,11 @@ require.register('package/path.js', function(exports, require, module) {
 ```
 
 ##Changelog
+
+####0.1.12
+
+- Allow having a build without a loader and one without any sources. This allows us to include our loader on the page, then vendor dependencies that could be using it and then our app build.
+- Fix bug in resolving modules preventing us from throwing an informative error message when a module is not found.
 
 ####0.1.11-1
 

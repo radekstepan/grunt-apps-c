@@ -146,6 +146,13 @@ tests =
                 do cb
             ]
 
+        loader_test_only: (test) ->
+            [ {}, ([ a, b ], cb) ->
+                _.each errors, assert.ifError
+                assert.equal a, b
+                do cb
+            ]
+
 # Export Mocha tests.
 for test, options of tests.apps_c then do (test, options) ->
     # Create the config proper.
@@ -153,8 +160,6 @@ for test, options of tests.apps_c then do (test, options) ->
     tests.apps_c[test] = _.extend defaults(test), opts
 
     exports[test] = (done) ->
-        console.log '\n'
-
         # Run the task.
         async.waterfall [
             _.partial(grunt.tasks, [ "apps_c:#{test}" ], {})

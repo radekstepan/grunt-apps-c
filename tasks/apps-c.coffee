@@ -81,6 +81,7 @@ async.parallel
     ready = yes
     ( do cb for cb in callbacks )
 
+# CommonJS app build, by default with a loader.
 commonjs = (grunt, cb) ->
     pkg = grunt.config.data.pkg
 
@@ -159,15 +160,35 @@ commonjs = (grunt, cb) ->
             modules = _.map modules, (module) ->
                 moulds.lines 'spaces': 4, 'lines': module
 
+            out = []
+
+            # By default we are including loader with the build.
+            opts.loader ?= yes
+
+            # Loader comes first?
+            out.push do moulds.commonjs.loader if opts.loader
+
             # Write a vanilla version and one packing a requirerer.
-            out = moulds.commonjs.loader
+            out.push moulds.commonjs.app
                 'modules': modules
                 'packages': opts.name
                 'main': opts.main
 
             # Write it.
-            fs.writeFile destination, out, cb
+            fs.writeFile destination, out.join("\n"), cb
     
+    , cb
+
+# CommonJS loader only.
+loader = (grunt, cb) ->
+    # For each in/out config.
+    async.each @files, (file, cb) =>
+        # Where to?
+        destination = path.normalize file.dest
+        # What?
+        out = do moulds.commonjs.loader
+        # Do it.
+        fs.writeFile destination, out, cb
     , cb
 
 module.exports = (grunt) ->
@@ -185,8 +206,12 @@ module.exports = (grunt) ->
         onReady = =>
             # The targets we support.
             switch
+                # CommonJS app build.
                 when @target.match /^commonjs/
                     commonjs.apply @, [ grunt, cb ]
+                # CommonJS loader only.
+                when @target.match /^loader/
+                    loader.apply @, [ grunt, cb ]
                 else
                     cb "Unsupported target `#{@target}`"
 
