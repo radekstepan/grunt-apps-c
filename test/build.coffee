@@ -53,7 +53,7 @@ dir = __dirname
 
 # Some defaults true to all tests.
 defaults = (test) ->
-    src: [ "test/fixtures/#{test}/src/**/*.{coffee,litcoffee,js,eco,mustache}" ]
+    src: [ "test/fixtures/#{test}/src/**/*.{coffee,litcoffee,js,json,eco,mustache}" ]
     dest: "test/fixtures/#{test}/build/app.actual.js"
 
 # The individual Grunt task options extending the defaults.
@@ -77,7 +77,7 @@ tests =
             , ([ a, b ], cb) ->
                 assert.deepEqual errors, [
                     'Package name is not defined'
-                    'Error: Task "apps_c:commonjs_test_noname" failed.'
+                    "Error: Task \"apps_c:#{test}\" failed."
                 ]
                 do cb
             ]
@@ -99,7 +99,7 @@ tests =
             , ([ a, b ], cb) ->
                 assert.deepEqual errors, [
                     'Main index file not defined'
-                    'Error: Task "apps_c:commonjs_test_noindex" failed.'
+                    "Error: Task \"apps_c:#{test}\" failed."
                 ]
                 do cb
             ]
@@ -140,8 +140,8 @@ tests =
                     name: 'TestApp'
             , ([ a, b ], cb) ->
                 assert.deepEqual errors, [
-                    'test/fixtures/commonjs_test_lineno/src/app.coffee:2:21: error: unexpected TERMINATOR',
-                    'Error: Task "apps_c:commonjs_test_lineno" failed.'
+                    "test/fixtures/#{test}/src/app.coffee:2:21: error: unexpected TERMINATOR"
+                    "Error: Task \"apps_c:#{test}\" failed."
                 ]
                 do cb
             ]
@@ -153,9 +153,38 @@ tests =
                     name: 'TestApp'
             , ([ a, b ], cb) ->
                 assert.deepEqual errors, [
-                    'Duplicate file test/fixtures/commonjs_test_dupes/src/index.js',
-                    'Error: Task "apps_c:commonjs_test_dupes" failed.'
+                    "Duplicate file test/fixtures/#{test}/src/index.js"
+                    "Error: Task \"apps_c:#{test}\" failed."
                 ]
+                do cb
+            ]
+
+        commonjs_test_json_fail: (test) ->
+            [
+                options:
+                    main: "test/fixtures/#{test}/src/app.coffee"
+                    name: 'TestApp'
+            , ([ a, b ], cb) ->
+                assert.deepEqual errors, [
+                    """
+                    test/fixtures/#{test}/src/data.json: error: Parse error on line 4:
+                    ...     "name": "Webb "Webster" Lucas",   
+                    -----------------------^
+                    Expecting 'EOF', '}', ':', ',', ']', got 'undefined'
+                    """
+                    "Error: Task \"apps_c:#{test}\" failed."
+                ]
+                do cb
+            ]
+
+        commonjs_test_json_pass: (test) ->
+            [
+                options:
+                    main: "test/fixtures/#{test}/src/app.coffee"
+                    name: 'TestApp'
+            , ([ a, b ], cb) ->
+                _.each errors, assert.ifError
+                assert.equal a, b
                 do cb
             ]
 

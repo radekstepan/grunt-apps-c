@@ -1,0 +1,29 @@
+[
+    {
+        "age": 29,
+        "name": "Webb "Webster" Lucas",
+        "gender": "male",
+        "company": "Netility",
+        "email": "webblucas@netility.com",
+        "phone": "+1 (963) 529-3976",
+        "address": "119 Johnson Street, Navarre, Virginia, 2054"
+    },
+    {
+        "age": 26,
+        "name": "James \"JJ\" Copeland",
+        "gender": "female",
+        "company": "Sulfax",
+        "email": "jamescopeland@sulfax.com",
+        "phone": "+1 (926) 449-2255",
+        "address": "574 Montauk Court, Ebro, Nebraska, 2158"
+    },
+    {
+        "age": 25,
+        "name": "Iva Carney",
+        "gender": "female",
+        "company": "Digial",
+        "email": "ivacarney@digial.com",
+        "phone": "+1 (896) 487-3303",
+        "address": "355 Jodie Court, Eastmont, Louisiana, 3329"
+    }
+]

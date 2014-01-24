@@ -1,6 +1,6 @@
-#grunt-apps-c
+#grunt-apps-c [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
-CoffeeScript, JavaScript, Eco, Mustache as CommonJS/1.1 Modules. AMD/CommonJS/window external interface.
+CoffeeScript, JavaScript, JSON, Eco, Mustache as CommonJS/1.1 Modules. AMD/CommonJS/window external interface.
 
 [ ![Codeship Status for radekstepan/grunt-apps-c](https://www.codeship.io/projects/7c42c200-2543-0131-75e4-3aa0f2c98596/status?branch=master)](https://www.codeship.io/projects/8915)
 
@@ -15,7 +15,7 @@ module.exports = (grunt) ->
         
         apps_c:
             commonjs:
-                src: [ 'src/**/*.{coffee,js,eco,mustache}' ]
+                src: [ 'src/**/*.{coffee,js,json,eco,mustache}' ]
                 dest: 'build/app.js'
                 options:
                     main: 'src/index.js'
@@ -134,6 +134,10 @@ Object.keys(require.modules)
 ```
 
 ##Changelog
+
+####0.1.14
+
+- Transpile [JSON](http://www.json.org/) into JS functions exported as modules.
 
 ####0.1.13
 

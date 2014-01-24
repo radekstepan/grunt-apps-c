@@ -8,7 +8,7 @@ module.exports = (filepath, cb) ->
     , (src, cb) ->
         try
             template = eco.precompile src
-            return cb null, 'module.exports = ' + template
+            return cb null, "module.exports = #{template}"
         catch err
             return cb err
     ], cb
