@@ -15,7 +15,7 @@ module.exports = (grunt) ->
         
         apps_c:
             commonjs:
-                src: [ 'src/**/*.{coffee,js,json,eco,mustache}' ]
+                src: [ 'src/**/*.{coffee,litcoffee,js,json,eco,mustache}' ]
                 dest: 'build/app.js'
                 options:
                     main: 'src/index.js'
@@ -90,7 +90,21 @@ Notice that we are asking for a `loader` target and are providing only `dest`; f
 
 The filetypes you can use (handlers) are listed in `tasks/`. The base filename of a handler represents the extension we match against.
 
-###Templates
+Languages that have an `*` after them support [linting](http://stackoverflow.com/questions/8503559/what-is-linting).
+
+###Programming languages
+
+####CoffeeScript*
+
+[CoffeeScript](http://coffeescript.org/) is a programming language that transcompiles to JavaScript. The language adds syntactic sugar inspired by Ruby, Python and Haskell to enhance JavaScript's brevity and readability, adding additional features like list comprehension and pattern matching.
+
+Besides being used as an ordinary programming language, CoffeeScript may also be written in "literate" mode. If you name your file with a `.litcoffee` extension, you can write it as a [Markdown](http://daringfireball.net/projects/markdown/syntax) document — a document that also happens to be executable CoffeeScript code. The compiler will treat any indented blocks (Markdown's way of indicating source code) as code, and ignore the rest as comments.
+
+####JavaScript
+
+Save your module with a `.js` extension and it will be copied into the build.
+
+###Templating languages
 
 ####Eco
 
@@ -113,6 +127,12 @@ For example, to use them inside [canJS](http://canjs.com/guides/Mustache.html) y
 var template = require('./templates/layout');
 can.view.mustache('layout', template);
 ```
+
+###Data Objects
+
+####JSON*
+
+Save your file as a [JSON](http://www.json.org/) and it will be exported to you as a JavaScript object.
 
 ##Modules
 
