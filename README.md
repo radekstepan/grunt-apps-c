@@ -2,7 +2,7 @@
 
 CoffeeScript, JavaScript, JSON, Eco, Mustache as CommonJS/1.1 Modules. AMD/CommonJS/window external interface.
 
-[ ![Codeship Status for radekstepan/grunt-apps-c](https://www.codeship.io/projects/7c42c200-2543-0131-75e4-3aa0f2c98596/status?branch=master)](https://www.codeship.io/projects/8915)
+[ ![Codeship Status for radekstepan/grunt-apps-c](https://www.codeship.io/projects/7c42c200-2543-0131-75e4-3aa0f2c98596/status)](https://www.codeship.io/projects/8915)
 
 ##Quick start
 
