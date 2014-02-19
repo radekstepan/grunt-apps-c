@@ -3,6 +3,7 @@ async  = require 'async'
 glob   = require 'glob'
 path   = require 'path'
 fs     = require 'fs'
+fsx    = require 'node-fs-extra'
 eco    = require 'eco'
 colors = require 'colors' # used by Grunt, require if we are running tests
 
@@ -186,7 +187,8 @@ commonjs = (grunt, cb) ->
                 'packages': opts.name
                 'main': opts.main
 
-            # Write it.
+            # Write it.            
+            try fsx.mkdirsSync path.dirname destination
             fs.writeFile destination, out.join("\n"), cb
     
     , cb
@@ -200,6 +202,7 @@ loader = (grunt, cb) ->
         # What?
         out = do moulds.commonjs.loader
         # Do it.
+        try fsx.mkdirsSync path.dirname destination
         fs.writeFile destination, out, cb
     , cb
 

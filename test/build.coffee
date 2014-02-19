@@ -208,8 +208,11 @@ for test, options of tests.apps_c then do (test, options) ->
 
         # Load actual & expected.
         , (cb) ->
-            async.map [ 'app.actual.js', 'app.expected.js' ], (name, cb) ->
-                fs.readFile dir + '/fixtures/' + test + '/build/' + name, 'utf-8', (err, file) ->
+            async.map [
+                'app.actual.js'
+                'app.expected.js'
+            ], (name, cb) ->
+                fs.readFile "#{dir}/fixtures/#{test}/build/#{name}", 'utf-8', (err, file) ->
                     # Silence!
                     cb null, file
             , cb
@@ -220,7 +223,7 @@ for test, options of tests.apps_c then do (test, options) ->
         # Cleanup.
         , (cb) ->
             errors = []
-            fs.unlink dir + '/fixtures/' + test + '/build/app.actual.js', (err) ->
+            fs.unlink "#{dir}/fixtures/#{test}/build/app.actual.js", (err) ->
                 # Silence!
                 do cb
 
