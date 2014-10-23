@@ -1,6 +1,6 @@
 #grunt-apps-c [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
-CoffeeScript, JavaScript, JSON, Eco, Mustache as CommonJS/1.1 Modules. AMD/CommonJS/window external interface.
+CoffeeScript, JavaScript, JSON, Eco, Mustache, HTML as CommonJS/1.1 Modules. AMD/CommonJS/window external interface.
 
 [ ![Codeship Status for radekstepan/grunt-apps-c](https://www.codeship.io/projects/7c42c200-2543-0131-75e4-3aa0f2c98596/status)](https://www.codeship.io/projects/8915)
 
@@ -117,7 +117,7 @@ var template = require('./templates/layout');
 $('body').html(template({ 'name': 'Radek' }));
 ```
 
-####Mustache
+####Mustache, HTML
 
 Mustache templates are transpiled into an exported string, so you need to use a library to compile it into a template that can actually be rendered.
 
@@ -154,6 +154,11 @@ Object.keys(require.modules)
 ```
 
 ##Changelog
+
+####0.1.16
+
+- Support HTML files which are exported as a string.
+
 
 ####0.1.15
 
