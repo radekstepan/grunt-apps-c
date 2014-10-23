@@ -148,7 +148,7 @@ require.register('package/path.coffee', function(exports, require, module) {
 You can debug all the registered modules in a browser like so:
 
 ```javascript
-Object.keys(require.modules)
+require.list()
 ```
 
 ##Changelog
