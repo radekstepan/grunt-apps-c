@@ -7,10 +7,15 @@ fsx    = require 'node-fs-extra'
 eco    = require 'eco'
 colors = require 'colors' # used by Grunt, require if we are running tests
 
+
 dir = __dirname
 
 # Place all moulds/templates here.
-moulds = {}
+moulds =
+    # Use Brunch CommonJS loader.
+    'commonjs':
+        loader: ->
+            require 'commonjs-require-definition'
 
 # Place all source file handlers here.
 handlers = {}
@@ -125,9 +130,6 @@ commonjs = (grunt, cb) ->
         # Say we use this index file.
         grunt.log.writeln "Using index file #{opts.main.bold}".yellow
 
-        # Remove the extension. It will be a `.js` one.
-        opts.main = opts.main.split('.')[0...-1].join('.')
-
         # Keep track of outputs to detect dupes.
         outputs = []
 
@@ -160,7 +162,7 @@ commonjs = (grunt, cb) ->
                 # Wrap it in the module registry.
                 cb null, moulds.commonjs.module
                     'package': opts.name[0]
-                    'path': { source, output }
+                    'path': source
                     'script': moulds.lines
                         'spaces': 2
                         'lines': result
@@ -171,7 +173,9 @@ commonjs = (grunt, cb) ->
 
             # Nicely format the modules.
             modules = _.map modules, (module) ->
-                moulds.lines 'spaces': 4, 'lines': module
+                moulds.lines
+                    'spaces': 4
+                    'lines': module
 
             out = []
 
@@ -183,11 +187,11 @@ commonjs = (grunt, cb) ->
 
             # Write a vanilla version and one packing a requirerer.
             out.push moulds.commonjs.app
-                'modules': modules
                 'packages': opts.name
+                'modules': modules
                 'main': opts.main
 
-            # Write it.            
+            # Write it.
             try fsx.mkdirsSync path.dirname destination
             fs.writeFile destination, out.join("\n"), cb
     

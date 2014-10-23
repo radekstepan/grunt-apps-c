@@ -2,8 +2,6 @@
 
 CoffeeScript, JavaScript, JSON, Eco, Mustache, HTML as CommonJS/1.1 Modules. AMD/CommonJS/window external interface.
 
-[ ![Codeship Status for radekstepan/grunt-apps-c](https://www.codeship.io/projects/7c42c200-2543-0131-75e4-3aa0f2c98596/status)](https://www.codeship.io/projects/8915)
-
 ##Quick start
 
 Example `Gruntfile.coffee`:
@@ -113,7 +111,7 @@ Eco templates come precompiled so when you require them, you get back a function
 An example:
 
 ```javascript
-var template = require('./templates/layout');
+var template = require('./templates/layout.eco');
 $('body').html(template({ 'name': 'Radek' }));
 ```
 
@@ -124,7 +122,7 @@ Mustache templates are transpiled into an exported string, so you need to use a 
 For example, to use them inside [canJS](http://canjs.com/guides/Mustache.html) you can do the following:
 
 ```javascript
-var template = require('./templates/layout');
+var template = require('./templates/layout.html');
 can.view.mustache('layout', template);
 ```
 
@@ -142,7 +140,7 @@ The following template wraps your modules:
 
 ```javascript
 // filename.coffee
-require.register('package/path.js', function(exports, require, module) {
+require.register('package/path.coffee', function(exports, require, module) {
     // ...
 });
 ```
@@ -155,10 +153,13 @@ Object.keys(require.modules)
 
 ##Changelog
 
+####0.2.0
+
+- *Breaking change*: Use a CommonJS loader from [Brunch](https://github.com/brunch/commonjs-require-definition) instead of our own. Need to require files with their original file extension too.
+
 ####0.1.16
 
 - Support HTML files which are exported as a string.
-
 
 ####0.1.15
 
