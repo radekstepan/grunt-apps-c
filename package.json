@@ -1,6 +1,6 @@
 {
   "name": "grunt-apps-c",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "CoffeeScript, JavaScript, Eco, Mustache, HTML as CommonJS/1.1 Modules",
   "dependencies": {
     "lodash": "~2.4.1",
